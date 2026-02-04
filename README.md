@@ -81,9 +81,9 @@ Requisitos
 Rodar Localmente:
 ----------
 1. Clone ou copie o projeto
-
+'''bash
     git clone https://github.com/vsceballos/Variant-Human-Search/
-
+'''
 3. Instale as dependências:
 
     pip install -r requirements.txt
