@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Variantes Genéticas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; padding-top: 50px; }
+        .container { max-width: 800px; }
+        .card { margin-top: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .header-title { color: #0d6efd; margin-bottom: 30px; }
+        .table th { width: 35%; color: #495057; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="text-center">
+        <h1 class="header-title"> Variant Human Search - SNP</h1>
+        <p class="lead">Consulta rápida ao Ensembl REST API</p>
+    </div>
+
+    <div class="card p-4">
+        <form method="POST" id="searchForm">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" name="rsid" placeholder="Ex: rs1333049" required>
+                <button class="btn btn-primary" type="submit" id="btnSearch">Buscar Variante</button>
+            </div>
+            <small class="text-muted">Digite o ID completo (ex: rs7142 ou rs1333049)</small>
+        </form>
+    </div>
+
+    {% if error %}
+    <div class="alert alert-danger mt-3 shadow-sm" role="alert">
+        <strong>Atenção:</strong> {{ error }}
+    </div>
+    {% endif %}
+
+    {% if info %}
+    <div class="card mt-4 border-0">
+        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center rounded-top">
+            <span class="h5 mb-0">Resultado: <strong>{{ info.rsid }}</strong></span>
+            <a href="https://www.ensembl.org/Homo_sapiens/Variation/Explore?v={{ info.rsid }}" target="_blank" class="btn btn-light btn-sm text-success fw-bold">
+                Ver no site oficial ↗
+            </a>
+        </div>
+        
+        <div class="card-body bg-white border rounded-bottom">
+            <table class="table table-striped table-hover align-middle">
+                <tbody>
+                    <tr>
+                        <th scope="row">Gene Associado</th>
+                        <td class="fw-bold text-primary fs-5">{{ info.genes }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Cromossomo</th>
+                        <td>{{ info.chromosome }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Posição (bp)</th>
+                        <td>{{ info.position }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Alelos</th>
+                        <td><span class="badge bg-secondary">{{ info.alleles }}</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Consequência</th>
+                        <td>{{ info.consequence }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Freq. Alelo Menor (MAF)</th>
+                        <td>{{ info.minor_allele_freq }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <details class="mt-4">
+                <summary class="text-muted small" style="cursor: pointer;">Ver JSON Bruto (Backend Response)</summary>
+                <div class="mt-2 position-relative">
+                    <pre class="bg-light p-3 border rounded text-secondary small">{{ info | tojson(indent=4) }}</pre>
+                </div>
+            </details>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+    document.getElementById('searchForm').addEventListener('submit', function() {
+        var btn = document.getElementById('btnSearch');
+        // Muda o texto e desabilita o botão para evitar cliques duplos
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Buscando...';
+        btn.disabled = true;
+    });
+</script>
+
+</body>
+</html>
