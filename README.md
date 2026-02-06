@@ -312,6 +312,7 @@ Configure o nível com `LOG_LEVEL`:
 ## 👤 Autor
 
 **Victor Ceballos**
+
 **Bioinformata**
 ## 🔗 Links Úteis
 
