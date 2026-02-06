@@ -51,27 +51,33 @@
                 <tbody>
                     <tr>
                         <th scope="row">Gene Associado</th>
-                        <td class="fw-bold text-primary fs-5">{{ info.genes }}</td>
+                        <td class="fw-bold text-primary fs-5">
+                            {% if info.genes and info.genes|length > 0 %}
+                                {{ info.genes|join(', ') }}
+                            {% else %}
+                                <span class="text-muted fst-italic">Não disponível</span>
+                            {% endif %}
+                        </td>
                     </tr>
                     <tr>
                         <th scope="row">Cromossomo</th>
-                        <td>{{ info.chromosome }}</td>
+                        <td>{% if info.chromosome %}{{ info.chromosome }}{% else %}<span class="text-muted fst-italic">N/A</span>{% endif %}</td>
                     </tr>
                     <tr>
                         <th scope="row">Posição (bp)</th>
-                        <td>{{ info.position }}</td>
+                        <td>{% if info.position %}{{ info.position|int }}{% else %}<span class="text-muted fst-italic">N/A</span>{% endif %}</td>
                     </tr>
                     <tr>
                         <th scope="row">Alelos</th>
-                        <td><span class="badge bg-secondary">{{ info.alleles }}</span></td>
+                        <td>{% if info.alleles %}<span class="badge bg-secondary">{{ info.alleles }}</span>{% else %}<span class="text-muted fst-italic">N/A</span>{% endif %}</td>
                     </tr>
                     <tr>
                         <th scope="row">Consequência</th>
-                        <td>{{ info.consequence }}</td>
+                        <td>{% if info.consequence %}<span class="badge bg-info">{{ info.consequence }}</span>{% else %}<span class="text-muted fst-italic">Não disponível</span>{% endif %}</td>
                     </tr>
                     <tr>
                         <th scope="row">Freq. Alelo Menor (MAF)</th>
-                        <td>{{ info.minor_allele_freq }}</td>
+                        <td>{% if info.minor_allele_freq %}{{ "%.4f"|format(info.minor_allele_freq) }}{% else %}<span class="text-muted fst-italic">N/A</span>{% endif %}</td>
                     </tr>
                 </tbody>
             </table>
