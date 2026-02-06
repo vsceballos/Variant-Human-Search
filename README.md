@@ -88,7 +88,7 @@ python variant_app.py
 ```
 
 A aplicação abrirá automaticamente em `http://127.0.0.1:5000`
-Caso não abra, acesse manualmente.
+#Caso não abra, acesse manualmente.
 
 ### Opção 2: Executar com Docker
 
