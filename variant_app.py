@@ -48,7 +48,7 @@ def fetch_variant_data(rsid):
 
         if response_var.status_code == 404:
             logger.warning(f"Variante não encontrada: {rsid}")
-            return None, "Variante não encontrada no Ensembl."
+            return None, "Variante não encontrada no banco de dados da Ensembl."
         if response_var.status_code != 200:
             logger.error(f"Erro API Variantes (status {response_var.status_code}): {rsid}")
             return None, f"Variante não encontrada no Ensembl (status {response_var.status_code})"
